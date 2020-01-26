@@ -58,18 +58,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) { // if the accelometer changes value this void is triggered
-        Y_Value.setText("Position:  " + String.format("%.2f", sensorEvent.values[1]));
+        Y_Value.setText("Position:  " + String.format("%.2f", sensorEvent.values[1])); //set text to current y position
 
-        if (sensorEvent.values[1] < MinimumPosition) {
+        if (sensorEvent.values[1] < MinimumPosition) { //if current postion is less than minimum
 
             String message = "You have been out of your PositionSet range for too long.";
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this)
-                    .setSmallIcon(R.drawable.ic_spine)
-                    .setContentTitle("Correct Your Posture")
-                    .setContentText(message)
-                    .setAutoCancel(true);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this) // create a notification
+                    .setSmallIcon(R.drawable.ic_spine) // find icon and set it to notification
+                    .setContentTitle("Correct Your Posture") // message to user
+                    .setContentText(message) // set content as the string
+                    .setAutoCancel(true); //  can be turned on without user
 
-            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+            Intent intent = new Intent(MainActivity.this, NotificationActivity.class); //create an intent as notification
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("message", message);
 
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(
                     Context.NOTIFICATION_SERVICE
-            );
+            );// build and push the notification
 
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            builder.setSound(uri);
+            builder.setSound(uri); // create sound on notification
 
             notificationManager.notify(0, builder.build());
 
@@ -90,13 +90,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             NotificationManager notificationManager = (NotificationManager) getSystemService(
                     Context.NOTIFICATION_SERVICE
             );
-            notificationManager.cancel(0);
+            notificationManager.cancel(0); // turn off the notification on fixed position
         }
         if (PositionSet) { //Control flow of void
-            MinimumPosition = sensorEvent.values[1];
-            Toast.makeText(MainActivity.this, " Selected Point : " + MinimumPosition, Toast.LENGTH_SHORT).show();
-            cPosition.setText(" Minimum: "+ MinimumPosition);
-            PositionSet = false;
+            MinimumPosition = sensorEvent.values[1]; //set minimum position to current
+            Toast.makeText(MainActivity.this, " Selected Point : " + MinimumPosition, Toast.LENGTH_SHORT).show(); // toast to user
+            cPosition.setText(" Minimum: "+ MinimumPosition); // set our min text
+            PositionSet = false; // turn off statement
         }
     }
 }
