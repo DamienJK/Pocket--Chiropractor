@@ -5,26 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-
     >
-
-
 
     <TextView
         android:id="@+id/yValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:translationY="100sp"
         android:textSize="55sp"
-        android:fontFamily="sans-serif-thin"
-        />
-
+        android:translationY="100sp"
+        android:translationX="20sp"
+        app:fontFamily="sans-serif-thin" />
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+
+        >
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -37,27 +35,26 @@
         android:translationY="600sp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-107dp"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        />
-
+        android:background="@android:color/holo_blue_bright"
+        android:textColor="@android:color/background_dark"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Button
         android:id="@+id/btn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Lowest Point"
+        android:layout_width="199dp"
+        android:layout_height="83dp"
         android:layout_centerInParent="true"
-        android:translationY="75sp"
-        android:background="@color/colorPrimary"
-        />
-
-
+        android:background="@android:color/holo_blue_bright"
+        android:text=" Set Lowest Point"
+        android:textColor="@android:color/background_dark"
+        android:translationY="100sp"
+        app:fontFamily="sans-serif-black" />
 
 
 </RelativeLayout>
