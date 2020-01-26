@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager; // android class to handle all sensor types and data
     Sensor accelerometer; // sensor of position and rate of movement
     TextView Y_Value; // android UI text item set to the current y value
+    TextView cPosition;
     boolean PositionSet = false; // bool to control flow if the position has been set
     Button SelectMinimumPositionBtn; // android button to select new minimum
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState); //starts void on the creation of the app's instance
         setContentView(R.layout.activity_main); // set the view to the xml file activity_main in the res/ layout file
         Y_Value = (TextView) findViewById(R.id.yValue); // find an item with id yValue set it to the text view
+        cPosition = (TextView) findViewById(R.id.cPosition); // find an item with id yValue set it to the text view
         SelectMinimumPositionBtn = findViewById(R.id.btn1); // same to the button object
         Toolbar toolbar = findViewById(R.id.toolbar); // find the ui tool bar set in the activity main by default
         setSupportActionBar(toolbar); // android void to access the toolbar and set it as an object
@@ -92,45 +94,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         if (PositionSet) { //Control flow of void
             MinimumPosition = sensorEvent.values[1];
-            Toast.makeText(MainActivity.this, " Selected Point : " + MinimumPosition,
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, " Selected Point : " + MinimumPosition, Toast.LENGTH_SHORT).show();
+            cPosition.setText(" Minimum: "+ MinimumPosition);
             PositionSet = false;
         }
     }
 }
 
-
-        /*
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.PositionSetOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .PositionSetAction("Action", null).show();
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_PositionSettings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
- */

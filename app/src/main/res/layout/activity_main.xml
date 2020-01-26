@@ -16,6 +16,15 @@
         android:translationX="20sp"
         app:fontFamily="sans-serif-thin" />
 
+    <TextView
+        android:id="@+id/cPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:translationX="20sp"
+        android:translationY="100sp"
+        android:layout_below="@+id/btn1"
+        app:fontFamily="sans-serif-thin" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
