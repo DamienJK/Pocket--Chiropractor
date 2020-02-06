@@ -19,9 +19,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import 	android.os.PowerManager;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
-
+ //   PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
     float MinimumPosition = -10f; //lowest y value allowed set to -10 on default stopping the notifications from starting automatically
     private SensorManager sensorManager; // android class to handle all sensor types and data
     Sensor accelerometer; // sensor of position and rate of movement
@@ -59,15 +60,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) { // if the accelometer changes value this void is triggered
         Y_Value.setText("Position:  " + String.format("%.2f", sensorEvent.values[1])); //set text to current y position
-
-        if (sensorEvent.values[1] < MinimumPosition) { //if current postion is less than minimum
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if (sensorEvent.values[1] < MinimumPosition && pm.isScreenOn()  ) { //if current postion is less than minimum
 
             String message = "You have been out of your PositionSet range for too long.";
             NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this) // create a notification
                     .setSmallIcon(R.drawable.ic_spine) // find icon and set it to notification
                     .setContentTitle("Correct Your Posture") // message to user
+
                     .setContentText(message) // set content as the string
                     .setAutoCancel(true); //  can be turned on without user
+
 
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class); //create an intent as notification
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -83,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             builder.setSound(uri); // create sound on notification
-
             notificationManager.notify(0, builder.build());
 
         } else {

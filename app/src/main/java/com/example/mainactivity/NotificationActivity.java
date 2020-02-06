@@ -13,7 +13,6 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
 
         TextView textView = findViewById(R.id.text_view);
-
         String message = getIntent().getStringExtra("message");
         textView.setText(message);
     }
