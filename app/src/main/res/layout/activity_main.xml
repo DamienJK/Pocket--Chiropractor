@@ -60,7 +60,7 @@
         android:layout_height="83dp"
         android:layout_centerInParent="true"
         android:background="@android:color/holo_blue_bright"
-        android:text=" Set Lowest Point"
+        android:text="@string/set_lowest_point"
         android:textColor="@android:color/background_dark"
         android:translationY="100sp"
         app:fontFamily="sans-serif-black" />
