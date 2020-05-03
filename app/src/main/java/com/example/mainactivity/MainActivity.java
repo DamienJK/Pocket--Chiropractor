@@ -27,13 +27,20 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
  //   PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-    float MinimumPosition = 0f; //lowest y value allowed set to -10 on default stopping the notifications from starting automatically
+    float MinimumPosition; //lowest y value allowed set to -10 on default stopping the notifications from starting automatically
     final String KEY ="MIN_KEY";
     Sensor accelerometer; // sensor of position and rate of movement
     TextView Y_Value; // android UI text item set to the current y value
     TextView cPosition;
     boolean PositionSet = false; // bool to control flow if the position has been set
     Button SelectMinimumPositionBtn; // android button to select new minimum
+
+    float LoadValue(){
+        float x =0f;
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        Toast.makeText(MainActivity.this, " Selected Point : " + sharedPreferences.getFloat(KEY,x), Toast.LENGTH_SHORT).show();
+        return  sharedPreferences.getFloat(KEY,x);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +52,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Toolbar toolbar = findViewById(R.id.toolbar); // find the ui tool bar set in the activity main by default
         setSupportActionBar(toolbar); // android void to access the toolbar and set it as an object
         Objects.requireNonNull(Objects.requireNonNull(getSupportActionBar())).setTitle("Pocket Chiropractor"); // changing the title of the toolbar
-        final SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        MinimumPosition = sharedPreferences.getFloat(KEY,0f);
+        MinimumPosition = LoadValue();
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // set the sensor manager to a sensor service to access class values
         assert sensorManager != null;
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // do the same to the acceleometer
         sensorManager.registerListener(MainActivity.this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL); //create a listener that is in this class under this context using the sensor accemeter
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putFloat(KEY, MinimumPosition);
-        cPosition.setText(" Minimum: "+ MinimumPosition); // set our min text
-        // Replace `putInt` with `putString` if your value is a String and not an Integer.
-        editor.apply();
-
         if(MinimumPosition !=0){
             cPosition.setText(" Minimum: "+ MinimumPosition); // set our min text
             PositionSet =true;
 
         }
-
         SelectMinimumPositionBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 PositionSet = true; // start static flow void inside of on value changed in response to button click
@@ -128,6 +127,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (PositionSet) { //Control flow of void
             MinimumPosition = sensorEvent.values[1]; //set minimum position to current
             Toast.makeText(MainActivity.this, " Selected Point : " + MinimumPosition, Toast.LENGTH_SHORT).show(); // toast to user
+            cPosition.setText(" Minimum: "+ MinimumPosition); // set our min text
+            SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat(KEY, MinimumPosition);
+            // Replace `putInt` with `putString` if your value is a String and not an Integer.
+            editor.apply();
             cPosition.setText(" Minimum: "+ MinimumPosition); // set our min text
             PositionSet = false; // turn off statement
         }
